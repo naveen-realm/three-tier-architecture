@@ -23,6 +23,16 @@ resource "aws_subnet" "prv_sub" {
   tags = var.compute_instance_tag
 }
 
+resource "aws_subnet" "sub1" {
+  cidr_block = "172.16.5.0/24"
+  vpc_id = "${aws_vpc.main.id}"
+}
+
+resource "aws_db_subnet_group" "dbsubnet" {
+  name       = "main"
+  subnet_ids = ["${aws_subnet.sub1.id}"]
+}
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 

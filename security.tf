@@ -17,6 +17,12 @@ resource "aws_security_group" "app_sg" {
 }
 
 
+resource "aws_security_group" "rds_sg" {
+  description = "rdp ingress access from app instance to rds"
+  vpc_id      = aws_vpc.main.id
+  tags = var.compute_instance_tag
+}
+
 resource "aws_security_group_rule" "out_http" {
   type              = "egress"
   from_port         = 80
@@ -62,4 +68,14 @@ resource "aws_security_group_rule" "in_ssh_app_from_bastion" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.app_sg.id
   source_security_group_id = aws_security_group.bastion_sg.id
+}
+
+resource "aws_security_group_rule" "rds_access" {
+  type                     = "ingress"
+  description              = "Allow rdp ingress from a app ec2 instance Security Group"
+  from_port                = 3389
+  to_port                  = 3389
+  protocol                 = "rdp"
+  security_group_id        = aws_security_group.rds_sg.id
+  source_security_group_id = aws_security_group.app_sg.id   
 }

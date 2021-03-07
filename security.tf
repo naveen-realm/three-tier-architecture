@@ -1,25 +1,19 @@
 resource "aws_security_group" "general_sg" {
   description = "HTTP, HTTPS and ICMP egress to anywhere"
   vpc_id      = aws_vpc.main.id
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_security_group" "bastion_sg" {
   description = "SSH ingress to Bastion and SSH egress to App"
   vpc_id      = aws_vpc.main.id
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_security_group" "app_sg" {
   description = "SSH ingress from Bastion and all TCP traffic ingress from ALB Security Group"
   vpc_id      = aws_vpc.main.id
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 

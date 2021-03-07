@@ -2,9 +2,7 @@ resource "aws_vpc" "main" {
   cidr_block           = "172.16.0.0/16"
   enable_dns_hostnames = true # defaults to false
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_subnet" "pub_sub" {
@@ -13,9 +11,7 @@ resource "aws_subnet" "pub_sub" {
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_subnet" "prv_sub" {
@@ -24,35 +20,26 @@ resource "aws_subnet" "prv_sub" {
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = false
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_eip" "nat_eip" {
   vpc = true
-  #   depends_on = [aws_internet_gateway.igw]
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.pub_sub.id
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_route_table" "pub_rt" {
@@ -63,9 +50,7 @@ resource "aws_route_table" "pub_rt" {
     gateway_id = aws_internet_gateway.igw.id
   }
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_route_table_association" "rt_assoc" {
@@ -81,9 +66,7 @@ resource "aws_route_table" "prv_rt" {
     nat_gateway_id = aws_nat_gateway.ngw.id
   }
 
-  tags = {
-    Project = "sample-app"
-  }
+  tags = var.compute_instance_tag
 }
 
 resource "aws_route_table_association" "prv_rt_assoc" {

@@ -8,7 +8,7 @@ The project contains terraform script which is used to build 3 tier architecture
 
 ## Prerequisites
 
-First and foremost, we'll need to have [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started) and the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed, as well as an active AWS account. Please refer to the official documentation to do so. Installing Terraform on Linux and macOS is easier, but if you're on Windows, I'd recommend installing Terraform using [Chocolatey](https://chocolatey.org/packages/terraform) (because it is easier).
+First and foremost, we'll need to have [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/aws-get-started) and the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) installed, as well as an active AWS account. Please refer to the official documentation to do so. Installing Terraform on Linux and macOS is easier, but if you're on Windows, I'd recommend installing Terraform using [Chocolatey](https://chocolatey.org/packages/terraform) (because it is easier). Also note that the backend s3 bucket is used to store the terraform tfstates and it needs to have some permissions.  please refer this document for the same - https://www.terraform.io/docs/language/settings/backends/s3.html#s3-bucket-permissions.
 
 Note: The aws access key and aws secret access key that you are using while 'aws configure' needs to have necessary permission to create/modify/delete the resources that are being done using terraform. 
 

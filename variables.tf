@@ -44,16 +44,6 @@ variable "database_name" {
   description = "The name of the database to create when the DB instance is created. If this parameter is not specified, no database is created in the DB instance."
  }
 
-variable "database_password" {
-  type        = string
-  description = "Password for the master DB user"
-}
-
-variable "database_username" {
-  type        = string
-  description = "Username for the master DB user"
-}
-
 variable "database_engine_version" {
   type        = string
   description = "The database engine version"
@@ -62,4 +52,29 @@ variable "database_engine_version" {
 variable "database_skip_final_snapshot" {
   type = bool
   description = "Determines whether a final DB snapshot is created before the DB instance is deleted. If true is specified, no DBSnapshot is created"
+}
+
+variable "database_username" {
+  type        = string
+  description = "The name of the parameter. This should be the key name for Username for the master DB user present in aws ssm paramter store"
+}
+
+variable "database_password" {
+  type        = string
+  description = "The name of the parameter. This should be the key name of Password for the master DB user present in aws ssm paramter store"
+}
+
+variable "backend_bucket_name" {
+  type        = string
+  description = "The name of the s3 bucket used to store the terraform states"
+}
+
+variable "backend_bucket_key" {
+  type        = string
+  description = "The path to the terraform state file in the bucket"
+}
+
+variable "backend_bucket_region" {
+  type = string
+  description = "The region where the bucket to store terraform state file is present"
 }
